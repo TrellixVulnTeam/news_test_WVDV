@@ -1,0 +1,39 @@
+{% extends "backend_base.html" %}
+
+{% block title %} Edit Category {{div_name}}'s Layout {% endblock %}
+
+{% block header %} Edit Category {{div_name}}'s Layout {% endblock %}
+
+{% block navigate_buttons %}
+        <a href="{{url_for('page.division',div=div_name)}}"> <input type="button" class="btn btn-info" value="Back to Categories Monitor"> </a>
+        <hr>
+{% endblock %}
+
+{% block info %}
+
+     <div class="container">
+            <h2> <strong> Editor's picks </strong> </h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td width="20" align="center"> <strong> <font size="3.5"> ID </font> </strong>  </td>
+                        <td width="600" align="center"> <strong> <font size="3.5">Name </font> </strong> </td>
+                        <td width="200" align="center"> <strong> <font size="3.5"> Number of Articles </font> </strong> </td>
+                        <td width="150" align="center"> <strong> <font size="3.5"> Page Layout </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5">Adjust </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5"> Remove </font> </strong> </td>
+                    </tr>
+                </thead>
+                {% for div in divs %}
+                        <tr>
+                            <td align="center"> <strong><font size="3"> {{div.id}}</font> </strong> </td>
+                            <td align="left"> <font size="3.8"> &nbsp; {{ div.name}} </font> </td>
+                            <td align="center"> <font size="3"> &nbsp; {{ num_articles.get(div.name) }} </font> </td>
+                            <td align="center"> <a href="{{url_for('page.div_layout', id=div.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a href="{{url_for('page.edit_div',id=div.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a data-toggle="modal" data-target="#delete{{div.name}}"> <font size="3.5"> X </font> </a> </td>
+                        </tr>
+            </table>
+     </div>
+
+{% endblock %}

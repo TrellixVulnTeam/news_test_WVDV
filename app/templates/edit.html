@@ -1,0 +1,58 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1 align="center"> <strong> Editing article: </strong> </h1>
+            <h2 align="center"> {{name}} </h2>
+            <a href="{{url_for('page.monitor')}}"> <input type="button" class="btn btn-info" value="Back to Articles Monitor"> </a>
+        </div>
+
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {{ wtf.quick_form(form, button_map={'submit':'success'}) }}
+        <p> </p>
+
+        <script type="text/javascript" src="{{url_for('static', filename='styles/tinymce/js/jquery.min.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='styles/tinymce/plugin/tinymce/tinymce.min.js')}}"> </script>
+        <script type="text/javascript" src="{{url_for('static', filename='styles/tinymce/plugin/tinymce/init-tinymce.js')}}"> </script>
+
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletediv">
+            Delete this Article
+        </button>
+
+<div class="modal" id="deletediv" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"> <strong>Delete Article</strong> </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to <strong>delete</strong> article <strong>"{{name}}"</strong>? This action cannot be reversed. </p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{{ url_for('page.delete', id=id) }}">  <button type="button" class="btn btn-danger">Yes</button> </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+
+{% endblock %}

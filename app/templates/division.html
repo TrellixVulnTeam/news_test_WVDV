@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} {{name}} {% endblock %}
+{% block content %}
+<h1> {{message}} </h1>
+{% for new in news %}
+<a href="single_page/{{new.id}}"> <h2> {{new.name}} </h2> </a>
+{% endfor %}
+{% endblock %}
+
+{% for div in div_list %}
+        <div class="container">
+            <p> <h2> <strong> {{div}} </strong> </h2> </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Adjust</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                {% for article in divs.get(div) %}
+                    {% if article!=None %}
+                        <tr>
+                            <td>{{article.id}}</td>
+                            <td>{{article.name}}</td>
+                            <td><a href="/edit/{{article.id}}"> Edit </a> </td>
+                            <td><a href="/delete/{{article.id}}"> &times; </a> </td>
+                        </tr>
+                    {% endif %}}
+                {% endfor %}
+                </table>
+        </div>
+    {% endfor %}

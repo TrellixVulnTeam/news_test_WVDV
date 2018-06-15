@@ -1,0 +1,86 @@
+{% extends "backend_base.html" %}
+{% block title %} Articles Monitor {% endblock %}
+
+{% block header %} Articles Monitor {% endblock %}
+
+{% block navigate_buttons %}
+        <table>
+            <tr>
+                <td> <a href="{{url_for('page.add')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-success" value="Add a new article"> </a> </td>
+                {% if current_user.is_moderator() %}
+                <td> &nbsp; </td>
+                <td> &nbsp; </td>
+                <td> <a href="{{url_for('page.div_monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-info" value="Categories Monitor"> </a> </td>
+                {% endif %}
+                {% if current_user.is_administrator() %}
+                <td> &nbsp; </td>
+                <td> &nbsp; </td>
+                <td> <a href="{{url_for('page.users_monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-default" value="Users Monitor"> </a> </td>
+                {% endif %}
+            </tr>
+        </table>
+{% endblock %}
+
+
+{% block info %}
+    <div class="container">
+    {% for div in div_list %}
+        <div class="container">
+            <h2> <strong> {{div}} </strong> </h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td width="20" align="center"> <strong> <font size="3.5"> ID </font> </strong>  </td>
+                        <td width="710" align="center"> <strong> <font size="3.5">Name </font> </strong> </td>
+                        <td width="150" align="center"> <strong> <font size="3.5"> Upload time </font> </strong> </td>
+                        <td width="120" align="center"> <strong> <font size="3.5"> Uploaded by </font> </strong> </td>
+                        <td width="90" align="center"> <strong> <font size="3.5">Adjust </font> </strong> </td>
+                        <td width="90" align="center"> <strong> <font size="3.5">Delete </font> </strong> </td>
+                    </tr>
+                </thead>
+                {% if  divs.get(div) %}
+                {% for article in divs.get(div) %}
+                    {% if article!=None %}
+
+                        <tr>
+                            <td align="center"> <strong><font size="3"> {{article.id}}</font> </strong> </td>
+                            <td align="left"> <font size="3.6"> &nbsp; {{ article.name}} </font> </td>
+                            <td align="center"> <font size="3"> &nbsp; {{ article.upload_time}} </font> </td>
+                            <td align="center"> <font size="3.6"> &nbsp; {{ article.uploaded_by}} </font> </td>
+                            <td align="center"><a href="{{url_for('page.edit',id=article.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a data-toggle="modal" data-target="#delete{{article.id}}"> <font size="3.5"> X </font> </a> </td>
+                        </tr>
+
+                    {% endif %}
+
+                <div class="modal" id="delete{{article.id}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title"> <strong> Delete article </strong> </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <p>Are you sure you want to <strong>delete</strong> article <strong>"{{article.name}}"</strong>? This action cannot be reversed.</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a href="{{ url_for('page.delete', id=article.id) }}">  <button type="button" class="btn btn-danger">Yes</button> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                {% endfor %}
+                {% endif %}
+                </table>
+        </div>
+    {% endfor %}
+        <p> </p>
+        <p> </p>
+
+
+
+{% endblock %}

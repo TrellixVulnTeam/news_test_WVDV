@@ -1,0 +1,17 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="static/styles/tinymce/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/styles/tinymce/plugin/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="static/styles/tinymce/plugin/tinymce/init-tinymce.js"></script>
+</head>
+<body>
+    <textarea class="tinymce"></textarea>
+    <textarea></textarea>
+    {{wtf.quick_form(form)}}
+
+</body>
+</html>

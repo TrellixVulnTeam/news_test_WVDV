@@ -1,0 +1,80 @@
+{% extends "backend_base.html" %}
+{% block title %} Users Monitor {% endblock %}
+
+{% block header %} Users Monitor {% endblock %}
+
+
+{% block navigate_buttons %}
+        <table>
+            <tr>
+                <td> <a href="{{url_for('page.add_user')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-success" value="Add a new User"> </a> </td>
+                <td> &nbsp; </td>
+                <td> &nbsp; </td>
+                <td> <a href="{{url_for('page.monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-info" value="Articles monitor"> </a> </td>
+                <td> &nbsp; </td>
+                <td> &nbsp; </td>
+                <td> <a href="{{url_for('page.div_monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-info" value="Categories monitor"> </a> </td>
+
+            </tr>
+        </table>
+{% endblock %}
+
+{% block info %}
+
+       {% for role in roles_list %}
+        <div class="container">
+            <h2> <strong> {{role}}s </strong> </h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td width="20" align="center"> <strong> <font size="3.5"> ID </font> </strong>  </td>
+                        <td width="300" align="center"> <strong> <font size="3.5"> Username </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5"> Adjust </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5"> Delete </font> </strong> </td>
+                    </tr>
+                </thead>
+                {% if  users.get(role) %}
+                {% for user in users.get(role) %}
+                    {% if user != None %}
+
+                        <tr>
+                            <td align="center"> <strong><font size="3"> {{user.id}}</font> </strong> </td>
+                            <td align="left"> <font size="3.8"> &nbsp; {{ user.username}} </font> </td>
+                            <td align="center"><a href="{{url_for('page.edit_user',id=user.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a data-toggle="modal" data-target="#delete{{user.id}}"> <font size="3.5"> X </font> </a> </td>
+                        </tr>
+
+                    {% endif %}
+
+                <div class="modal" id="delete{{user.id}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title"> <strong> Delete User </strong> </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <p>Are you sure you want to <strong>delete</strong> {{user.role.name}} <strong>"{{user.username}}"</strong>? This action cannot be reversed.</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a href="{{ url_for('page.delete_user', id=user.id) }}">  <button type="button" class="btn btn-danger">Yes</button> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                {% endfor %}
+                {% endif %}
+                </table>
+        </div>
+        <p> </p>
+    {% endfor %}
+        <p> </p>
+        <p> </p>
+
+
+
+{% endblock %}

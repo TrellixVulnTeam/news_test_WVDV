@@ -1,0 +1,19 @@
+{% extends "backend_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} Add new User {% endblock %}
+
+{% block header %} Add new User {% endblock %}
+
+{% block navigate_buttons %}
+        <a href="{{url_for('page.users_monitor')}}"> <input type="button" class="btn btn-info" value="Back to Users Monitor"> </a>
+        <hr>
+{% endblock %}
+
+{% block info %}
+
+    <div class="container">
+        {{wtf.quick_form(form, button_map={'submit':'success'})}}
+    </div>
+
+{% endblock %}

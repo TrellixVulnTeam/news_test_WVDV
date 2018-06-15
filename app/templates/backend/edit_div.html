@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Add Category{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1 align="center"> <strong> Editing Category: &nbsp; {{name}} </strong> </h1>
+            <a href="{{url_for('page.div_monitor')}}"> <input type="button" class="btn btn-info" value="Back to Categories Monitor"> </a>
+        </div>
+
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+             </div>
+            {% endfor %}
+        </div>
+
+
+        {{ wtf.quick_form(form, button_map={'submit':'success'}) }}
+        <p> </p>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletediv">
+            Delete this Category
+        </button>
+
+<div class="modal" id="deletediv" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="modal-title"> <strong>Delete Category "{{name}}"</strong></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p>Are you sure you want to <strong>delete</strong> category <strong>"{{name}}"</strong>? There are <strong>{{num_of_articles}}</strong> article(s) that associate with this category.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{{ url_for('page.delete_div', name=name) }}">  <button type="button" class="btn btn-danger">Yes</button> </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+
+{% endblock %}

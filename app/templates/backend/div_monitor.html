@@ -1,0 +1,78 @@
+{% extends "backend_base.html" %}
+{% block title %} Categories Monitor {% endblock %}
+
+{% block header %} Categories Monitor {% endblock %}
+
+{% block navigate_buttons %}
+    <table>
+        <tr>
+            <td> <a href="{{url_for('page.add_div')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-success" value="Add a new Category"> </a> </td>
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+            <td> <a href="{{url_for('page.monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-info" value="Articles Monitor"> </a> </td>
+            {% if current_user.is_administrator() %}
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+            <td> <a href="{{url_for('page.users_monitor')}}"> <input type="button" style="height: 38px; width: 160px" class="btn btn-default" value="Users Monitor"> </a> </td>
+            {% endif %}
+        </tr>
+    </table>
+{% endblock %}
+
+{% block info %}
+        <div class="container">
+           <p> </p>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td width="20" align="center"> <strong> <font size="3.5"> ID </font> </strong>  </td>
+                        <td width="600" align="center"> <strong> <font size="3.5">Name </font> </strong> </td>
+                        <td width="200" align="center"> <strong> <font size="3.5"> Number of Articles </font> </strong> </td>
+                        <td width="150" align="center"> <strong> <font size="3.5"> Page Layout </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5">Adjust </font> </strong> </td>
+                        <td width="100" align="center"> <strong> <font size="3.5">Delete </font> </strong> </td>
+                    </tr>
+                </thead>
+                {% for div in divs %}
+                        <tr>
+                            <td align="center"> <strong><font size="3"> {{div.id}}</font> </strong> </td>
+                            <td align="left"> <font size="3.8"> &nbsp; {{ div.name}} </font> </td>
+                            <td align="center"> <font size="3"> &nbsp; {{ num_articles.get(div.name) }} </font> </td>
+                            <td align="center"> <a href="{{url_for('page.div_layout', id=div.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a href="{{url_for('page.edit_div',id=div.id)}}"> <font size="3.5"> Edit </font> </a> </td>
+                            <td align="center"><a data-toggle="modal" data-target="#delete{{div.name}}"> <font size="3.5"> X </font> </a> </td>
+                        </tr>
+
+
+
+                <div class="modal" id="delete{{div.name}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h3 class="modal-title"> <strong>Delete Category "{{div.name}}"</strong> </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <p>Are you sure you want to <strong>delete</strong> category <strong>"{{div.name}}"</strong>? There are <strong>{{num_articles.get(div.name)}}</strong> article(s) that associate with this category.</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a href="{{ url_for('page.delete_div', name=div.name) }}">  <button type="button" class="btn btn-danger">Yes</button> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+                {% endfor %}
+                </table>
+
+            <br>
+             <a href="{{ url_for('page.home')}}"> <p align="center"> <button type="button" class="btn btn-basic">Click here to edit Home Page's Layout </button> </p> </a>
+
+
+        </div>
+
+{% endblock %}

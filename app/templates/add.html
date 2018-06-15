@@ -1,0 +1,33 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Add{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1 align="center"> <strong> Add a new article </strong> </h1>
+            <a href="{{url_for('page.monitor')}}"> <input type="button" class="btn btn-info" value="Back to Articles Monitor"> </a>
+        </div>
+
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+             </div>
+            {% endfor %}
+        </div>
+
+
+        {{ wtf.quick_form(form, button_map={'submit':'success'}) }}
+        <br>
+        <br>
+
+         <script type="text/javascript" src="{{url_for('static', filename="styles/tinymce/js/jquery.min.js")}}"></script>
+         <script type="text/javascript" src="{{url_for('static', filename="styles/tinymce/plugin/tinymce/tinymce.min.js")}}"> </script>
+         <script type="text/javascript" src="{{url_for('static', filename="styles/tinymce/plugin/tinymce/init-tinymce.js")}}"> </script>
+
+    </div>
+
+{% endblock %}
